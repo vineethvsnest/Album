@@ -1,0 +1,53 @@
+﻿@model IPagedList<AlbumMS.Models.Photos>
+@using PagedList;
+@using PagedList.Mvc; 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>  
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <b>Search : </b>@Html.RadioButton("strOption", "Title"); <text>Title</text>
+        @Html.RadioButton("strOption", "UserName") <text>User's Name</text> @Html.TextBox("strSearch") <input type="submit" name="submit" value="Search" /> @Html.ActionLink("Refresh", "Index", "Home")
+    }
+
+            <table class="table">
+                <tr>
+                  <th colspan="6"><h2>Album List</h2></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img src=@item.thumbnailUrl /></td> 
+                        <td>@Html.ActionLink(item.AlbumsList.title.ToString(), "AlbumDetails", "Home", new { albumid = item.albumId }, null)</td>
+                        <td>@Html.ActionLink(item.UserList.name, "UserDetails", "Home", new { userid = item.UserList.id }, null)</td>                     
+                        <td>@Html.DisplayFor(modelItem => item.UserList.email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserList.phone)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserList.address.street)<br>
+                            @Html.DisplayFor(modelItem => item.UserList.address.suite)<br>
+                            @Html.DisplayFor(modelItem => item.UserList.address.city)<br>
+                            @Html.DisplayFor(modelItem => item.UserList.address.zipcode)<br>
+                        </td>
+                    </tr>
+                }
+                @Html.Hidden("StudentId")
+                @Html.PagedListPager(Model, pageNumber => Url.Action("Index", new { pageNumber, strOption = ViewBag.strOption, strSearch = ViewBag.strSearch }))
+       </table>       
+    
+</body>
+</html>

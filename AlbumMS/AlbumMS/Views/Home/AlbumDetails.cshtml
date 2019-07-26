@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AlbumMS.Models.Photos>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Album Details</title> 
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/Album.css">    
+</head>
+<body>
+@using (Html.BeginForm("toHomePage", "Home", FormMethod.Post))
+{
+    <table cellspacing="1" width="100%">
+        <tr>
+            <th>Album List</th>
+        </tr>
+        <tr>
+            <td align="left" height="20px"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" name="Home" value="Home" /></td>
+        </tr>
+        <tr><td height="10px"></td></tr>
+        <tr>
+            <td>            
+                <table width="100%" border="1">
+                    @{
+                        int Counter = 1;
+                        foreach (var item in Model)
+                        {
+                            if (Counter == 1)
+                            {
+                                @Html.Raw("<tr>");
+                            }
+
+                            if (Counter <= 3)
+                            {
+                                @Html.Raw("<td><img src=" + @item.thumbnailUrl + "/><br />");
+                                @Html.DisplayFor(modelItem => item.title)
+                                @Html.Raw("</td>");
+                                Counter++;
+                            }
+                            else
+                            {
+                                @Html.Raw("</tr>");
+                                Counter = 1;
+                            }
+                        }
+                    }
+            </table>
+            </td>
+        </tr>
+    </table>
+}
+</body>
+</html>
+

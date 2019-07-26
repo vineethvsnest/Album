@@ -1,0 +1,98 @@
+﻿@model IEnumerable <AlbumMS.Models.PostData>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User Details</title>
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/Album.css">   
+</head>
+<body>
+    @using (Html.BeginForm("toHomePage", "Home", FormMethod.Post))
+    {
+        <table cellspacing="1">
+            <tr>
+                <th colspan="6">User Details</th>
+            </tr>
+            <tr>
+                <td colspan="6" align="right"><input type="submit" name="Home" value="Home" /></td>
+            </tr>
+            <tr>
+                <td colspan="6" align="left" height="10px"></td>
+            </tr>
+            <tr>
+                <td colspan="6" align="left">
+                    <table  cellspacing="0">
+                        <tr>
+                            <td align="left">Name:</td>
+                            <td align="left">
+                               @Model.FirstOrDefault().lslUserDetails.name
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" colspan="2">Address</td>                            
+                        </tr>
+                        <tr>
+                        <td align="left">Street:</td><td  align="left">
+                            @Model.FirstOrDefault().lslUserDetails.address.street</td>
+                           </tr>
+                        <tr>
+                            <td align="left">Suite:</td>
+                            <td align="left">
+                                @Model.FirstOrDefault().lslUserDetails.address.suite
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">City:</td>
+                            <td align="left">
+                                @Model.FirstOrDefault().lslUserDetails.address.city
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">ZipCode:</td>
+                            <td align="left">
+                                @Model.FirstOrDefault().lslUserDetails.address.zipcode
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">Phone:</td>
+                            <td align="left">
+                                @Model.FirstOrDefault().lslUserDetails.phone
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">Email:</td>
+                            <td align="left">
+                                @Model.FirstOrDefault().lslUserDetails.email
+                            </td>
+                        </tr>
+                 </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" align="left" height="10px"></td>
+            </tr>            
+            <tr>
+                <th colspan="6" align="center">Posts</th>
+            </tr>
+            <tr>
+                <td colspan="6" align="left" height="10px"></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <table border="1" cellspacing="1">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.body);
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        </table>
+    }
+</body>
+</html>
